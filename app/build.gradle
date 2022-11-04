@@ -6,6 +6,7 @@ plugins {
 
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-parcelize'
+apply from: '../config/detekt//detekt.gradle'
 
 
 android {
