@@ -10,7 +10,7 @@ apply from: '../config/detekt//detekt.gradle'
 
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.example.marvelapp"
