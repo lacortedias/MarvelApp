@@ -5,6 +5,7 @@ plugins {
 }
 
 apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'kotlin-parcelize'
 apply from: '../config/detekt//detekt.gradle'
 
@@ -15,7 +16,7 @@ android {
     defaultConfig {
         applicationId "com.example.marvelapp"
         minSdk 23
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
