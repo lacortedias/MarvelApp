@@ -25,6 +25,7 @@ java {
 
      //Paging3 Common
      implementation "androidx.paging:paging-common:$paging_version"
+     testImplementation("androidx.paging:paging-common:$paging_version")
 
      //Javax Inject
      implementation "javax.inject:javax.inject:1"
