@@ -18,6 +18,7 @@ class CharactersPagingSource(
         }
     }
 
+    @Suppress("TooGenericExceptionCaught")
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Character> {
         return try {
             val offset = params.key ?: 0
