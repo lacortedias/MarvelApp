@@ -11,6 +11,7 @@ class CharactersPagingSource(
     private val remoteDataSource: CharactersRemoteDataSource<DataWrapperResponse>,
     private val query: String
 ): PagingSource<Int, Character>() {
+
     override fun getRefreshKey(state: PagingState<Int, Character>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             val anchorPage = state.closestPageToPosition(anchorPosition)
@@ -35,7 +36,7 @@ class CharactersPagingSource(
 
             LoadResult.Page(
                 data = response.data.results.map { it.toCharacterModel() },
-                prevKey = null,
+                prevKey = responseOffset - LIMIT,
                 nextKey = if (responseOffset < totalCharacters){
                     responseOffset + LIMIT
                 }else null
