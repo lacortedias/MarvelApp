@@ -36,7 +36,10 @@ class CharactersPagingSource(
 
             LoadResult.Page(
                 data = response.data.results.map { it.toCharacterModel() },
-                prevKey = responseOffset - LIMIT,
+                prevKey = when (responseOffset) {
+                    0 -> null
+                    else -> responseOffset - LIMIT
+                },
                 nextKey = if (responseOffset < totalCharacters){
                     responseOffset + LIMIT
                 }else null
