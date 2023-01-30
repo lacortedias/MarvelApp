@@ -5,6 +5,8 @@ import androidx.paging.PagingData
 import com.example.core.domain.model.Character
 import com.example.core.usecase.GetCharactersUseCase
 import com.example.marvelapp.util.TestCoroutineRule
+import com.example.testing.MainCoroutineRule
+import com.example.testing.model.CharactersFactoryTest
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
@@ -27,27 +29,27 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class CharactersViewModelTest {
 
-    @get:Rule
-    val instantExecutorRule = InstantTaskExecutorRule()
+//    @get:Rule
+//    val instantExecutorRule = InstantTaskExecutorRule()
+//
+//    @get:Rule
+//    val testCoroutineRule = TestCoroutineRule()
 
+    @ExperimentalCoroutinesApi
     @get:Rule
-    val testCoroutineRule = TestCoroutineRule()
+    val mainCoroutineRule = MainCoroutineRule()
 
     @Mock
     lateinit var getCharacterUseCase: GetCharactersUseCase
 
     private lateinit var charactersViewModel: CharactersViewModel
 
+    private val charactersFactoryTest = CharactersFactoryTest()
+
     private val pagingDataCharacters = PagingData.from(
         listOf(
-            Character(
-                "3-D man",
-                "https://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg"
-            ),
-            Character(
-                "A-Bomb (HAS)",
-                "https://i.annihil.us/u/prod/marvel/i/mg/3/20/5232158de5b16.jpg"
-            )
+            charactersFactoryTest.create(CharactersFactoryTest.Hero.ThreeDMan),
+            charactersFactoryTest.create(CharactersFactoryTest.Hero.ABomb)
         )
     )
 
@@ -85,5 +87,4 @@ class CharactersViewModelTest {
 
             charactersViewModel.charactersPagingData("")
         }
-
 }
