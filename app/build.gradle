@@ -14,6 +14,14 @@ def apikeyProperties = new Properties()
 apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('C:\\Exercicio\\Android Studio\\marvelapp\\store\\marvel_app_key_store.jks')
+            storePassword 'Marvel@21'
+            keyAlias 'marvel_app'
+            keyPassword 'Marvel@21'
+        }
+    }
     compileSdk 33
 
     defaultConfig {
@@ -30,8 +38,21 @@ android {
     }
 
     buildTypes {
+        debug {
+            applicationIdSuffix '.debug'
+            debuggable true
+        }
+        staging {
+            initWith debug
+            minifyEnabled true
+            applicationIdSuffix '.staging'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro',
+                    'proguard-rules-staging.pro'
+        }
         release {
-            minifyEnabled false
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -51,7 +72,7 @@ android {
 
 dependencies {
 
-    implementation project (':core')
+    implementation project(':core')
 
     // AndroidX
     implementation 'androidx.core:core-ktx:1.9.0'
@@ -112,7 +133,7 @@ dependencies {
     implementation "androidx.datastore:datastore-preferences:1.0.0"
 
     // Unit tests
-    testImplementation project (":testing")
+    testImplementation project(":testing")
     testImplementation "androidx.room:room-testing:$room_version"
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
