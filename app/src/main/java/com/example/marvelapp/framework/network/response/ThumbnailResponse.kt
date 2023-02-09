@@ -8,6 +8,5 @@ data class ThumbnailResponse(
     val path: String,
     @SerializedName("extension")
     val extension: String
-    //val extension: String
 
 )
