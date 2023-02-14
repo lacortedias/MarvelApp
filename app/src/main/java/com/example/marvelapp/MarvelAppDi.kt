@@ -7,4 +7,5 @@ import dagger.hilt.android.HiltAndroidApp
 class MarvelAppDi : Application() {
 
     val teste = "teste"
+    val teste2 = "teste2"
 }
