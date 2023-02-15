@@ -81,10 +81,12 @@ dependencies {
 
     // AndroidX
     implementation 'androidx.core:core-ktx:1.9.0'
+    //noinspection GradleDependency
     implementation 'androidx.appcompat:appcompat:1.6.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
     // Material design
+    //noinspection GradleDependency
     implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
