@@ -17,8 +17,10 @@ android {
 
     lintOptions {
         baseline file('lint-baseline.xml')
-        checkReleaseBuilds false
+        checkReleaseBuilds true
         abortOnError false
+        checkTestSources true
+        checkDependencies true
     }
 
     signingConfigs {
