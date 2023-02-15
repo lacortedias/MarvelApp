@@ -14,6 +14,11 @@ def apikeyProperties = new Properties()
 apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
 
 android {
+    
+    lintOptions {
+        baseline file("lint-baseline.xml")
+    }
+
     signingConfigs {
         release {
             storeFile file('$rootDir/store/marvel_app_key_store.jks')
