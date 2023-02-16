@@ -16,7 +16,7 @@ apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
 android {
     signingConfigs {
         release {
-            storeFile file('C:\\Exercicio\\Android Studio\\marvelapp\\store\\marvel_app_key_store.jks')
+            storeFile file("$rootDir/store/marvel_app_key_store.jks")
             storePassword 'Marvel@21'
             keyAlias 'marvel_app'
             keyPassword 'Marvel@21'
@@ -57,17 +57,18 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '11'
         freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn"]
     }
 
     buildFeatures {
         viewBinding = true
     }
+    namespace 'com.example.marvelapp'
 }
 
 dependencies {
@@ -76,11 +77,11 @@ dependencies {
 
     // AndroidX
     implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.appcompat:appcompat:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
     // Material design
-    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     // Navigation
