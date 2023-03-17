@@ -12,11 +12,9 @@ abstract class UseCase<in P, R>{
         emit(doWork(params))
     }.catch { throwable ->
         emit(ResultStatus.Error(throwable))
-
     }
 
     protected abstract suspend fun doWork(params: P): ResultStatus<R>
-
 }
 
 abstract class PagingUseCase<in P, R: Any>{

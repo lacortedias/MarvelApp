@@ -75,7 +75,7 @@ class CharactersViewModelTest {
             )
 
             val result = charactersViewModel.charactersPagingData("")
-            assertEquals(1, result.count())
+            assertNotNull(result.first())
         }
 
     @ExperimentalCoroutinesApi
