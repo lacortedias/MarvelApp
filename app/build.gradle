@@ -35,9 +35,6 @@ android {
 
         testInstrumentationRunner "com.example.marvelapp.CustomTestRunner"
         testInstrumentationRunnerArguments clearPackageData: 'true'
-        //testInstrumentationRunnerArgument("androidx.test.core.app.ApplicationProvider.APP_CLASS_NAME", "com.example.marvelapp.HiltTestActivity")
-
-        //testInstrumentationRunnerArguments(['hilt-runner-config': 'com.example.marvelapp.HiltTestActivity'])
 
         buildConfigField "String", "PUBLIC_KEY", apikeyProperties['PUBLIC_KEY']
         buildConfigField "String", "PRIVATE_KEY", apikeyProperties['PRIVATE_KEY']

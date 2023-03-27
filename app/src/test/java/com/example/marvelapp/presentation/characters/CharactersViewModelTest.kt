@@ -1,5 +1,6 @@
 package com.example.marvelapp.presentation.characters
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.paging.PagingData
 import com.example.core.usecase.GetCharactersUseCase
 import com.example.testing.MainCoroutineRule
@@ -22,8 +23,8 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class CharactersViewModelTest {
 
-//    @get:Rule
-//    val instantExecutorRule = InstantTaskExecutorRule()
+    @get:Rule
+    val instantExecutorRule = InstantTaskExecutorRule()
 //
 //    @get:Rule
 //    val testCoroutineRule = TestCoroutineRule()
