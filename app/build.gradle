@@ -7,6 +7,7 @@ plugins {
 
 apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
+apply plugin: "androidx.navigation.safeargs"
 apply plugin: 'kotlin-parcelize'
 apply from: '../config/detekt//detekt.gradle'
 
@@ -34,9 +35,6 @@ android {
 
         testInstrumentationRunner "com.example.marvelapp.CustomTestRunner"
         testInstrumentationRunnerArguments clearPackageData: 'true'
-        //testInstrumentationRunnerArgument("androidx.test.core.app.ApplicationProvider.APP_CLASS_NAME", "com.example.marvelapp.HiltTestActivity")
-
-        //testInstrumentationRunnerArguments(['hilt-runner-config': 'com.example.marvelapp.HiltTestActivity'])
 
         buildConfigField "String", "PUBLIC_KEY", apikeyProperties['PUBLIC_KEY']
         buildConfigField "String", "PRIVATE_KEY", apikeyProperties['PRIVATE_KEY']
@@ -130,11 +128,11 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
 
     // Paging3
-    def paging_version = "3.0.1"
+    def paging_version = "3.1.1"
     implementation "androidx.paging:paging-runtime-ktx:$paging_version"
 
     // Glide
-    def glide_version = "4.12.0"
+    def glide_version = "4.15.0"
     implementation "com.github.bumptech.glide:glide:$glide_version"
     kapt "com.github.bumptech.glide:compiler:$glide_version"
 
@@ -144,7 +142,7 @@ dependencies {
 
     // Other Libs
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
-    implementation 'com.google.code.gson:gson:2.9.0'
+    implementation 'com.google.code.gson:gson:2.10.1'
     implementation "androidx.datastore:datastore-preferences:1.0.0"
 
     // Unit tests
