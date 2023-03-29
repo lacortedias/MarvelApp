@@ -3,8 +3,7 @@ package com.example.marvelapp.framework.paging
 import androidx.paging.PagingSource
 import com.example.core.data.repository.CharactersRemoteDataSource
 import com.example.core.domain.model.Character
-import com.example.marvelapp.factory.response.DataWrapperResponseFactoryTest
-import com.example.marvelapp.framework.network.response.DataWrapperResponse
+import com.example.marvelapp.factory.response.CharacterPagingFactory
 import com.example.testing.MainCoroutineRule
 import com.example.testing.model.CharactersFactoryTest
 import com.nhaarman.mockitokotlin2.any
@@ -19,19 +18,20 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 
+@ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class CharactersPagingSourceTest {
 
-    @ExperimentalCoroutinesApi
+
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
 
     private lateinit var charactersPagingSource: CharactersPagingSource
 
     @Mock
-    lateinit var charactersRemoteDataSource: CharactersRemoteDataSource<DataWrapperResponse>
+    lateinit var charactersRemoteDataSource: CharactersRemoteDataSource
 
-    private val dataWrapperResponseFactoryTest = DataWrapperResponseFactoryTest()
+    private val characterPagingFactoryTest = CharacterPagingFactory()
 
     private val charactersFactoryTest = CharactersFactoryTest()
 
@@ -40,12 +40,11 @@ class CharactersPagingSourceTest {
         charactersPagingSource = CharactersPagingSource(charactersRemoteDataSource, "")
     }
 
-    @ExperimentalCoroutinesApi
     @Test
     fun `should return a success load result when load is called`() =
         runTest {
             whenever(charactersRemoteDataSource.fetchCharacters(any()))
-                .thenReturn(dataWrapperResponseFactoryTest.create())
+                .thenReturn(characterPagingFactoryTest.create())
 
             val result = charactersPagingSource.load(
                 PagingSource.LoadParams.Refresh(
@@ -70,7 +69,6 @@ class CharactersPagingSourceTest {
             )
         }
 
-    @ExperimentalCoroutinesApi
     @Test
     fun `should return a error load result when load is called`() =
         runTest {
