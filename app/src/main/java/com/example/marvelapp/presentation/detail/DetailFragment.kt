@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.example.marvelapp.R
 import com.example.marvelapp.databinding.FragmentDetailBinding
 import com.example.marvelapp.framework.imageloader.ImageLoader
 import com.example.marvelapp.presentation.extensions.showShortToast
@@ -56,12 +58,12 @@ class DetailFragment : Fragment() {
 
 //        binding.imageFavoriteIcon.setOnClickListener {
 //            viewModel.updateFavorite(detailViewArg)
-////            it.backgroundTintList = ContextCompat.getColorStateList(
-////                requireContext(), R.color.red_400
-////            )
-////            binding.imageFavoriteIcon.backgroundTintList = ContextCompat.getColorStateList(
-////                requireContext(), R.color.red_400
-////            )
+//            it.backgroundTintList = ContextCompat.getColorStateList(
+//                requireContext(), R.color.red_400
+//            )
+            binding.imageFavoriteIcon.backgroundTintList = ContextCompat.getColorStateList(
+                requireContext(), R.color.red_400
+            )
 //        }
     }
 
@@ -89,23 +91,29 @@ class DetailFragment : Fragment() {
     }
 
     private fun setAndObserveFavoriteUiState(detailViewArg: DetailViewArg) {
-        binding.imageFavoriteIcon.setOnClickListener {
-            viewModel.favoritesCategories.update(detailViewArg)
-        }
+        viewModel.favoritesCategories.run {
+            checkFavorite(detailViewArg.characterId)
 
-        viewModel.favoritesCategories.state.observe(viewLifecycleOwner) { uiState ->
-            binding.flipperFavorite.displayedChild = when (uiState) {
-                FavoritesUiActionStateLiveData.UiState.Loading -> FLIPPER_FAVORITE_CHILD_POSITION_LOADING
-                is FavoritesUiActionStateLiveData.UiState.Icon -> {
-                    binding.imageFavoriteIcon.setImageResource(uiState.icon)
-                    FLIPPER_FAVORITE_CHILD_POSITION_SUCCESS_OR_ERROR_IMAGE
-                }
-                is FavoritesUiActionStateLiveData.UiState.Error -> {
-                    showShortToast(uiState.messageResId)
-                    FLIPPER_FAVORITE_CHILD_POSITION_SUCCESS_OR_ERROR_IMAGE
+            binding.imageFavoriteIcon.setOnClickListener {
+                update(detailViewArg)
+            }
+
+            state.observe(viewLifecycleOwner) { uiState ->
+                binding.flipperFavorite.displayedChild = when (uiState) {
+                    FavoritesUiActionStateLiveData.UiState.Loading -> FLIPPER_FAVORITE_CHILD_POSITION_LOADING
+                    is FavoritesUiActionStateLiveData.UiState.Icon -> {
+                        binding.imageFavoriteIcon.setImageResource(uiState.icon)
+                        FLIPPER_FAVORITE_CHILD_POSITION_SUCCESS_OR_ERROR_IMAGE
+                    }
+                    is FavoritesUiActionStateLiveData.UiState.Error -> {
+                        showShortToast(uiState.messageResId)
+                        FLIPPER_FAVORITE_CHILD_POSITION_SUCCESS_OR_ERROR_IMAGE
+                    }
                 }
             }
         }
+
+
     }
 
     // Define a animação da transição como "move"
