@@ -22,8 +22,8 @@ class DetailViewModel @Inject constructor(
     getCharacterCategoriesUseCase: GetCharacterCategoriesUseCase,
     checkFavoriteUseCase: CheckFavoriteUseCase,
     addFavoriteUseCase: AddFavoriteUseCase,
-    coroutinesDispatchers: CoroutinesDispatchers,
-    deleteFavoriteUseCase: DeleteFavoriteUseCase
+    deleteFavoriteUseCase: DeleteFavoriteUseCase,
+    coroutinesDispatchers: CoroutinesDispatchers
 ) : ViewModel() {
 
     val charactersCategories = CharactersUiActionStateLiveData(
@@ -34,7 +34,6 @@ class DetailViewModel @Inject constructor(
     val favoritesCategories = FavoritesUiActionStateLiveData(
         coroutinesDispatchers.main(),
         checkFavoriteUseCase,
-        //context,
         addFavoriteUseCase,
         deleteFavoriteUseCase
     )
