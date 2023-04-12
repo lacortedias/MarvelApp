@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.usecase.AddFavoriteUseCase
 import com.example.core.usecase.CheckFavoriteUseCase
+import com.example.core.usecase.DeleteFavoriteUseCase
 import com.example.core.usecase.GetCharacterCategoriesUseCase
 import com.example.core.usecase.base.CoroutinesDispatchers
 import com.example.marvelapp.R
@@ -20,9 +21,9 @@ import javax.inject.Inject
 class DetailViewModel @Inject constructor(
     getCharacterCategoriesUseCase: GetCharacterCategoriesUseCase,
     checkFavoriteUseCase: CheckFavoriteUseCase,
-    //context: Context,
     addFavoriteUseCase: AddFavoriteUseCase,
-    coroutinesDispatchers: CoroutinesDispatchers
+    coroutinesDispatchers: CoroutinesDispatchers,
+    deleteFavoriteUseCase: DeleteFavoriteUseCase
 ) : ViewModel() {
 
     val charactersCategories = CharactersUiActionStateLiveData(
@@ -34,7 +35,8 @@ class DetailViewModel @Inject constructor(
         coroutinesDispatchers.main(),
         checkFavoriteUseCase,
         //context,
-        addFavoriteUseCase
+        addFavoriteUseCase,
+        deleteFavoriteUseCase
     )
 
 }

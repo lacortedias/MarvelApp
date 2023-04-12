@@ -1,15 +1,20 @@
 package com.example.marvelapp.presentation.detail
 
+import android.graphics.PorterDuff
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.example.marvelapp.R
 import com.example.marvelapp.databinding.FragmentDetailBinding
 import com.example.marvelapp.framework.imageloader.ImageLoader
@@ -55,16 +60,6 @@ class DetailFragment : Fragment() {
 
         loadCategoriesAndObserveCharacterUiState(detailViewArg)
         setAndObserveFavoriteUiState(detailViewArg)
-
-//        binding.imageFavoriteIcon.setOnClickListener {
-//            viewModel.updateFavorite(detailViewArg)
-//            it.backgroundTintList = ContextCompat.getColorStateList(
-//                requireContext(), R.color.red_400
-//            )
-            binding.imageFavoriteIcon.backgroundTintList = ContextCompat.getColorStateList(
-                requireContext(), R.color.red_400
-            )
-//        }
     }
 
     private fun loadCategoriesAndObserveCharacterUiState(detailViewArg: DetailViewArg) {
@@ -96,6 +91,25 @@ class DetailFragment : Fragment() {
 
             binding.imageFavoriteIcon.setOnClickListener {
                 update(detailViewArg)
+
+                val drawable = VectorDrawableCompat.create(
+                    resources,
+                    R.drawable.ic_favorite_checked,
+                    null
+                ) as Drawable
+
+// Defina a nova cor usando ContextCompat.getColor() ou resources.getColor()
+                val newColor = ContextCompat.getColor(requireContext(), R.color.black)
+
+// Define a nova cor usando setTint()
+                drawable.setTint(newColor)
+
+// Define o drawable atualizado como a imagem de um ImageView
+                binding.imageFavoriteIcon.setImageDrawable(drawable)
+//                path.setTint(ContextCompat.getColor(requireContext(), R.color.yellow))
+//                binding.imageFavoriteIcon.backgroundTintList = ContextCompat.getColorStateList(
+//                    requireContext(), R.color.black
+//                )
             }
 
             state.observe(viewLifecycleOwner) { uiState ->
