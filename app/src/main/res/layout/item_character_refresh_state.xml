@@ -7,19 +7,19 @@
         android:id="@+id/text_try_again"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/error_loading_more_try_again"
+        android:text="@string/common_offline_try_again"
         android:textAlignment="center"
-        android:background="@color/black_800"
-        android:paddingEnd="16dp"
         android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:background="@color/medium_grey"
         android:paddingTop="24dp"
         android:paddingBottom="24dp"
-        android:textColor="@color/white"/>
+        android:textColor="@color/black" />
 
     <ProgressBar
         android:id="@+id/progress_loading_more"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center" />
 
 </FrameLayout>
