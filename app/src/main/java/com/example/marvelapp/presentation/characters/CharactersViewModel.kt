@@ -25,15 +25,16 @@ class CharactersViewModel @Inject constructor(
     coroutinesDispatchers: AppCoroutinesDispatchers
 ) : ViewModel() {
 
+    var currentSearchQuery = ""
+
     private val action = MutableLiveData<Action>()
 
     val state: LiveData<UiState> = action
-        .distinctUntilChanged()
         .switchMap {
             when (it) {
-                is Action.Search -> {
+                is Action.Search, Action.sort -> {
                     getCharactersUseCase.invoke(
-                        GetCharactersUseCase.GetCharactersParams(it.query, getPagingConfig())
+                        GetCharactersUseCase.GetCharactersParams(currentSearchQuery, getPagingConfig())
                     ).cachedIn(viewModelScope).map { pagingData_Character ->
                         UiState.SearchResult(pagingData_Character)
                     }.asLiveData(coroutinesDispatchers.main())
@@ -51,8 +52,18 @@ class CharactersViewModel @Inject constructor(
         pageSize = 20
     )
 
-    fun searchCharacters(query: String = "") {
-        action.value = Action.Search(query)
+    fun searchCharacters() {
+        action.value = Action.Search
+    }
+
+    fun applySort(){
+        action.value = Action.sort
+    }
+
+    fun closeSearch(){
+        if (currentSearchQuery.isNotEmpty()){
+            currentSearchQuery = ""
+        }
     }
 
     sealed class UiState {
@@ -60,6 +71,7 @@ class CharactersViewModel @Inject constructor(
     }
 
     sealed class Action {
-        data class Search(val query: String) : Action()
+        object Search : Action()
+        object sort : Action()
     }
 }
