@@ -22,7 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CharactersViewModel @Inject constructor(
     private val getCharactersUseCase: GetCharactersUseCase,
-    coroutinesDispatchers: AppCoroutinesDispatchers
+    coroutinesDispatchers: CoroutinesDispatchers
 ) : ViewModel() {
 
     var currentSearchQuery = ""
