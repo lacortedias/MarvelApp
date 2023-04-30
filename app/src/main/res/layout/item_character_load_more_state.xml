@@ -17,7 +17,7 @@
         android:textColor="@color/white"/>
 
     <ProgressBar
-        android:id="@+id/progress_load_more"
+        android:id="@+id/progress_loading_more"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>

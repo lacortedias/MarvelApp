@@ -8,12 +8,12 @@ class GlideImageLoader @Inject constructor() : ImageLoader {
     override fun load(
         imageView: ImageView,
         imageUrl: String,
-        placeholder: Int,
+        placeHolder: Int,
         fallback: Int
     ) {
         Glide.with(imageView.rootView)
             .load(imageUrl)
-            .placeholder(placeholder)
+            .placeholder(placeHolder)
             .fallback(fallback)
             .into(imageView)
     }
