@@ -8,7 +8,7 @@ import com.example.core.domain.model.Character
 class CharactersPagingSource(
     private val remoteDataSource: CharactersRemoteDataSource,
     private val query: String
-): PagingSource<Int, Character>() {
+) : PagingSource<Int, Character>() {
 
     override fun getRefreshKey(state: PagingState<Int, Character>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -24,7 +24,7 @@ class CharactersPagingSource(
             val queries = hashMapOf(
                 "offset" to offset.toString()
             )
-            if (query.isNotEmpty()){
+            if (query.isNotEmpty()) {
                 queries["nameStartsWith"] = query
             }
 
@@ -34,21 +34,18 @@ class CharactersPagingSource(
 
             LoadResult.Page(
                 data = characterPaging.characters,
-                prevKey = when (responseOffset) {
-                    0 -> null
-                    else -> responseOffset - LIMIT
-                },
-                nextKey = if (responseOffset < totalCharacters){
+                prevKey = null,
+                nextKey = if (responseOffset < totalCharacters) {
                     responseOffset + LIMIT
-                }else null
+                } else null
             )
 
-        }catch (exception: Exception){
+        } catch (exception: Exception) {
             LoadResult.Error(exception)
         }
     }
 
-    companion object{
-        private const val LIMIT  = 20
+    companion object {
+        private const val LIMIT = 20
     }
 }

@@ -50,8 +50,10 @@ class CharactersViewModelTest {
     fun setUp() {
 
         getCharacterUseCase = mock()
-        charactersViewModel = CharactersViewModel(getCharacterUseCase)
-
+        charactersViewModel = CharactersViewModel(
+            getCharacterUseCase,
+            mainCoroutineRule.testDispatcherProvider
+        )
     }
 
     @Test
