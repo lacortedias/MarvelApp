@@ -39,6 +39,8 @@ class SortFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.chipGroupOrderBy.check(R.id.chip_name)
+        binding.chipGroupOrder.check(R.id.chip_ascending)
         setChipGroupListeners()
         observeUiState()
     }
