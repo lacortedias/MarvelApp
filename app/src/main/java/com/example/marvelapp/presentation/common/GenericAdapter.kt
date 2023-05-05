@@ -15,7 +15,9 @@ inline fun <T: ListItem, VH: GenericViewHolder<T>> getGenericAdapterOf(
         }
 
         override fun onBindViewHolder(holder: VH, position: Int) {
-            holder.bind(getItem(position))
+            getItem(position)?.let {
+                holder.bind(it)
+            }
         }
 
     }

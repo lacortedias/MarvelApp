@@ -10,5 +10,6 @@
         android:id="@+id/favoritesFragment"
         android:name="com.example.marvelapp.presentation.favorites.FavoritesFragment"
         android:label="@string/favorites_screen_title"
-        tools:layout="@layout/fragment_favorites" />
+        tools:layout="@layout/fragment_favorites" >
+    </fragment>
 </navigation>

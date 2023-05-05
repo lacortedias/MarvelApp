@@ -5,11 +5,13 @@ import kotlinx.coroutines.flow.Flow
 
 interface FavoritesLocalDataSource {
 
+    fun filterFavorites(query: String) : Flow<List<Character>>
+
     fun getAllFavoritesLocalDataSource(): Flow<List<Character>>
 
     suspend fun isFavorite(characterId: Int): Boolean
     
-    suspend fun saveFavoriteLocalDataSource(character: com.example.core.domain.model.Character)
+    suspend fun saveFavoriteLocalDataSource(character: Character)
 
-    suspend fun deleteFavoriteLocalDataSource(character: com.example.core.domain.model.Character)
+    suspend fun deleteFavoriteLocalDataSource(character: Character)
 }

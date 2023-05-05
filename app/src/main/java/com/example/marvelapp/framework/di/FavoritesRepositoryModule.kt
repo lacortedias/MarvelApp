@@ -20,5 +20,4 @@ interface FavoritesRepositoryModule {
     fun bindFavoritesLocalDataSource(
         dataSource: RoomFavoritesDataSource
     ): FavoritesLocalDataSource
-
 }

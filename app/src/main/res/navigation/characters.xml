@@ -34,4 +34,16 @@
         android:id="@+id/sortFragment"
         android:name="com.example.marvelapp.presentation.sort.SortFragment"
         tools:layout="@layout/fragment_sort" />
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.example.marvelapp.presentation.favorites.FavoritesFragment"
+        android:label="@string/favorites_screen_title"
+        tools:layout="@layout/fragment_favorites" >
+        <action
+            android:id="@+id/action_favoritesFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_favoritesFragment_to_sortFragment"
+            app:destination="@id/sortFragment" />
+    </fragment>
 </navigation>

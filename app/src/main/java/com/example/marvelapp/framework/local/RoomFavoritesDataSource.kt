@@ -12,6 +12,12 @@ import javax.inject.Inject
 class RoomFavoritesDataSource @Inject constructor(
     private val favoriteDao: FavoriteDao
 ) : FavoritesLocalDataSource {
+    override fun filterFavorites(query: String): Flow<List<Character>> {
+        return favoriteDao.filterFavorites(query).map {
+            it.toCharactersModel()
+        }
+    }
+
     override fun getAllFavoritesLocalDataSource(): Flow<List<Character>> {
         return favoriteDao.loadFavorites().map {
             it.toCharactersModel()
@@ -30,6 +36,6 @@ class RoomFavoritesDataSource @Inject constructor(
         favoriteDao.deleteFavorites(character.toFavoriteEntity())
     }
 
-    private fun com.example.core.domain.model.Character.toFavoriteEntity() =
+    private fun Character.toFavoriteEntity() =
         FavoriteEntity(id, name, imageUrl)
 }
