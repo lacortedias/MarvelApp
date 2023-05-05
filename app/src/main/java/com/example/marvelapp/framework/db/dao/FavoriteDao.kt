@@ -12,6 +12,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface FavoriteDao {
 
+    @Query("SELECT * FROM ${DbConstants.FAVORITES_TABLE_NAME} WHERE " +
+            "${DbConstants.FAVORITES_COLUMN_INFO_NAME} LIKE '%' || :query || '%'")
+    fun filterFavorites(query: String): Flow<List<FavoriteEntity>>
+
     @Query("SELECT * FROM ${DbConstants.FAVORITES_TABLE_NAME}")
     fun loadFavorites(): Flow<List<FavoriteEntity>>
 

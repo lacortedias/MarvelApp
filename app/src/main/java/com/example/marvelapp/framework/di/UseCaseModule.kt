@@ -16,6 +16,8 @@ import com.example.core.usecase.GetFavoritesUseCase
 import com.example.core.usecase.GetFavoritesUseCaseImpl
 import com.example.core.usecase.SaveCharactersSortingUseCase
 import com.example.core.usecase.SaveCharactersSortingUseCaseImpl
+import com.example.core.usecase.SearchFavoritesUseCase
+import com.example.core.usecase.SearchFavoritesUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -35,6 +37,9 @@ interface UseCaseModule {
 
     @Binds
     fun bindCheckFavoriteUseCase(useCase: CheckFavoriteUseCaseImpl): CheckFavoriteUseCase
+
+    @Binds
+    fun bindSearchFavoritesUseCaseUseCase(useCase: SearchFavoritesUseCaseImpl): SearchFavoritesUseCase
 
     @Binds
     fun bindAddFavoriteUseCase(useCase: AddFavoriteUseCaseImpl): AddFavoriteUseCase

@@ -6,11 +6,11 @@
         android:icon="@drawable/ic_heroes_menu_outlined"
         android:title="@string/app_menu_heroes" />
     <item
-        android:id="@+id/favorites"
+        android:id="@+id/favoritesFragment"
         android:icon="@drawable/ic_favorite_menu_outlined"
         android:title="@string/app_menu_favorites" />
-    <item
-        android:id="@+id/about"
-        android:icon="@drawable/ic_info_menu_outlined"
-        android:title="@string/app_menu_about" />
+<!--    <item-->
+<!--        android:id="@+id/about"-->
+<!--        android:icon="@drawable/ic_info_menu_outlined"-->
+<!--        android:title="@string/app_menu_about" />-->
 </menu>

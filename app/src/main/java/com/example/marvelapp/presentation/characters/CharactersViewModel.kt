@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.distinctUntilChanged
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingConfig
@@ -12,7 +11,6 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.core.domain.model.Character
 import com.example.core.usecase.GetCharactersUseCase
-import com.example.core.usecase.base.AppCoroutinesDispatchers
 import com.example.core.usecase.base.CoroutinesDispatchers
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -32,7 +30,7 @@ class CharactersViewModel @Inject constructor(
     val state: LiveData<UiState> = action
         .switchMap {
             when (it) {
-                is Action.Search, Action.sort -> {
+                is Action.Search, Action.Sort -> {
                     getCharactersUseCase.invoke(
                         GetCharactersUseCase.GetCharactersParams(currentSearchQuery, getPagingConfig())
                     ).cachedIn(viewModelScope).map { pagingData_Character ->
@@ -57,7 +55,7 @@ class CharactersViewModel @Inject constructor(
     }
 
     fun applySort(){
-        action.value = Action.sort
+        action.value = Action.Sort
     }
 
     fun closeSearch(){
@@ -72,6 +70,6 @@ class CharactersViewModel @Inject constructor(
 
     sealed class Action {
         object Search : Action()
-        object sort : Action()
+        object Sort : Action()
     }
 }

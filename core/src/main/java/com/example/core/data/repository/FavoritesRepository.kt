@@ -5,6 +5,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface FavoritesRepository {
 
+    suspend fun filterFavorites(query: String) : Flow<List<Character>>
+
     fun getAllFavorites(): Flow<List<Character>>
 
     suspend fun isFavorite(characterId: Int): Boolean

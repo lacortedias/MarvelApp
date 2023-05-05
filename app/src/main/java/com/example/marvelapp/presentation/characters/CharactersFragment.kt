@@ -67,7 +67,6 @@ class CharactersFragment : Fragment(),
                         character.imageUrl
                     )
                 )
-
             findNavController().navigate(directions, extras)
         }
     }
@@ -141,7 +140,7 @@ class CharactersFragment : Fragment(),
                         }
                         FLIPPER_CHILD_ERROR
                     }
-                    loadState.source?.refresh is LoadState.NotLoading
+                    loadState.source.refresh is LoadState.NotLoading
                             || loadState.mediator?.refresh is LoadState.NotLoading -> {
                         setShimmerVisibility(false)
                         FLIPPER_CHILD_CHARACTERS
