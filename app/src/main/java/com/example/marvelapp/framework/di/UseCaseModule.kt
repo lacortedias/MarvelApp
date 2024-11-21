@@ -31,9 +31,7 @@ interface UseCaseModule {
     fun bindGetCharactersUseCase(useCase: GetCharactersUseCaseImpl): GetCharactersUseCase
 
     @Binds
-    fun bindGetCharacterCategoriesUseCase(
-        useCase: GetCharacterCategoriesUseCaseImpl
-    ): GetCharacterCategoriesUseCase
+    fun bindGetCharacterCategoriesUseCase(useCase: GetCharacterCategoriesUseCaseImpl): GetCharacterCategoriesUseCase
 
     @Binds
     fun bindCheckFavoriteUseCase(useCase: CheckFavoriteUseCaseImpl): CheckFavoriteUseCase
@@ -51,12 +49,8 @@ interface UseCaseModule {
     fun bindGetFavoritesUseCase(useCase: GetFavoritesUseCaseImpl): GetFavoritesUseCase
 
     @Binds
-    fun bindGetCharactersSortingUseCase(
-        useCase: GetCharactersSortingUseCaseImpl
-    ): GetCharactersSortingUseCase
+    fun bindGetCharactersSortingUseCase(useCase: GetCharactersSortingUseCaseImpl): GetCharactersSortingUseCase
 
     @Binds
-    fun bindSaveCharactersSortingUseCase(
-        useCase: SaveCharactersSortingUseCaseImpl
-    ): SaveCharactersSortingUseCase
+    fun bindSaveCharactersSortingUseCase(useCase: SaveCharactersSortingUseCaseImpl): SaveCharactersSortingUseCase
 }

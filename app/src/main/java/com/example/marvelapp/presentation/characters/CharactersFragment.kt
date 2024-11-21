@@ -176,11 +176,11 @@ class CharactersFragment : Fragment(),
                 )
             }
         }
-        navBackStackEntry.getLifecycle().addObserver(observer)
+        navBackStackEntry.lifecycle.addObserver(observer)
 
         viewLifecycleOwner.lifecycle.addObserver(LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_DESTROY){
-                navBackStackEntry.getLifecycle().removeObserver(observer)
+                navBackStackEntry.lifecycle.removeObserver(observer)
             }
         })
     }
