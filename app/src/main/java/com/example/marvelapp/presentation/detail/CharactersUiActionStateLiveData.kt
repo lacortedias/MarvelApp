@@ -31,7 +31,7 @@ class CharactersUiActionStateLiveData(
                             val comics = data.first
                             if (comics.isNotEmpty()) {
                                 comics.map {
-                                    DetailChildVE(it.id, it.imageUrl)
+                                    DetailChildVE(it.id, it.titleCategory, it.imageUrl)
                                 }.also {
                                     detailParentList.add(
                                         DetailParentVE(R.string.details_comics_category, it)
@@ -42,7 +42,7 @@ class CharactersUiActionStateLiveData(
                             val events = data.second
                             if (events.isNotEmpty()) {
                                 events.map {
-                                    DetailChildVE(it.id, it.imageUrl)
+                                    DetailChildVE(it.id, it.titleCategory, it.imageUrl)
                                 }.also {
                                     detailParentList.add(
                                         DetailParentVE(R.string.details_events_category, it)

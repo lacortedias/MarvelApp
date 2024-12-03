@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 
 data class DetailChildVE(
     val id: Int,
+    val titleCategory: String,
     val imageUrl: String
 )
 

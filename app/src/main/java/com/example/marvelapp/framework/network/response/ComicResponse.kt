@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName
 data class ComicResponse(
     @SerializedName("id")
     val id: Int,
+    @SerializedName("title")
+    val title: String,
     @SerializedName("thumbnail")
     val thumbnail: ThumbnailResponse
 )
@@ -13,6 +15,7 @@ data class ComicResponse(
 fun ComicResponse.toComicModel(): Comic {
     return Comic(
         id = this.id,
+        titleCategory = title,
         imageUrl = this.thumbnail.getHttpsUrl()
     )
 }

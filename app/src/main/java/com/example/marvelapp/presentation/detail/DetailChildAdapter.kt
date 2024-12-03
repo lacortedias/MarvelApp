@@ -3,8 +3,8 @@ package com.example.marvelapp.presentation.detail
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.marvelapp.R
 import com.example.marvelapp.databinding.ItemChildDetailBinding
 import com.example.marvelapp.framework.imageloader.ImageLoader
 
@@ -28,9 +28,11 @@ class DetailChildAdapter(
         private val imageLoader: ImageLoader
     ): RecyclerView.ViewHolder(itemBinding.root){
 
+        private val titleCategory: TextView = itemBinding.titleItemCategory
         private val imageCategory: ImageView = itemBinding.imageItemCategory
 
         fun bind(detailChildVE: DetailChildVE){
+            titleCategory.text = detailChildVE.titleCategory
             imageLoader.load(imageCategory, detailChildVE.imageUrl)
         }
 
