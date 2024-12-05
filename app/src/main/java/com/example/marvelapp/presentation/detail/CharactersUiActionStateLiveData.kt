@@ -2,6 +2,7 @@ package com.example.marvelapp.presentation.detail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.distinctUntilChanged
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import com.example.core.usecase.GetCharacterCategoriesUseCase
@@ -15,7 +16,9 @@ class CharactersUiActionStateLiveData(
 ) {
 
     private val action = MutableLiveData<Action>()
-    val state: LiveData<UiState> = action.switchMap {
+    val state: LiveData<UiState> = action
+        .distinctUntilChanged()
+        .switchMap {
         liveData(coroutineContext) {
             when(it){
                 is Action.Load -> {
