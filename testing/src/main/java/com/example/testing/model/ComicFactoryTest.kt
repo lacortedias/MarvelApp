@@ -7,6 +7,7 @@ class ComicFactoryTest {
     fun create(comic: FakeComic) = when (comic) {
         FakeComic.FakeComic1 -> Comic(
             2211506,
+            "Title",
             "http://fakecomigurl.jpg"
         )
     }
