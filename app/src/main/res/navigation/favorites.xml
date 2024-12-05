@@ -11,5 +11,23 @@
         android:name="com.example.marvelapp.presentation.favorites.FavoritesFragment"
         android:label="@string/favorites_screen_title"
         tools:layout="@layout/fragment_favorites" >
+        <action
+            android:id="@+id/action_favoritesFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_favoritesFragment_to_sortFragment"
+            app:destination="@id/sortFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.example.marvelapp.presentation.detail.DetailFragment"
+        android:label="{screenTitle}"
+        tools:layout="@layout/fragment_detail">
+        <argument
+            android:name="screenTitle"
+            app:argType="string" />
+        <argument
+            android:name="detailViewArg"
+            app:argType="com.example.marvelapp.presentation.detail.DetailViewArg" />
     </fragment>
 </navigation>
