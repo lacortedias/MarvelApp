@@ -44,13 +44,7 @@ class CharactersFragment : Fragment(),
     @Inject
     lateinit var imageLoader: ImageLoader
 
-    private lateinit var searchView: SearchView
-
-    private val headerAdapter: CharactersRefreshStateAdapter by lazy {
-        CharactersRefreshStateAdapter(
-            charactersAdapter::retry
-        )
-    }
+    private var searchView: SearchView? = null
 
     private val charactersAdapter: CharactersAdapter by lazy {
         CharactersAdapter(imageLoader) { character, view ->
@@ -69,6 +63,18 @@ class CharactersFragment : Fragment(),
                 )
             findNavController().navigate(directions, extras)
         }
+    }
+
+    private val headerAdapter: CharactersRefreshStateAdapter by lazy {
+        CharactersRefreshStateAdapter(
+            charactersAdapter::retry
+        )
+    }
+
+    private val footerAdapter: CharactersLoadMoreStateAdapter by lazy {
+        CharactersLoadMoreStateAdapter(
+            charactersAdapter::retry
+        )
     }
 
     override fun onCreateView(
@@ -97,7 +103,8 @@ class CharactersFragment : Fragment(),
                 }
             }
         }
-        viewModel.searchCharacters()
+
+        viewModel.initialize()
     }
 
     private fun initCharactersAdapter() {
@@ -106,16 +113,14 @@ class CharactersFragment : Fragment(),
             setHasFixedSize(true)
             adapter = charactersAdapter.withLoadStateHeaderAndFooter(
                 header = headerAdapter,
-                footer = CharactersLoadMoreStateAdapter(
-                    charactersAdapter::retry
-                )
+                footer = footerAdapter
             )
+
             viewTreeObserver.addOnPreDrawListener {
                 startPostponedEnterTransition()
                 true
             }
         }
-
     }
 
     private fun observeInitialLoadState() {
@@ -125,6 +130,12 @@ class CharactersFragment : Fragment(),
                     ?.refresh
                     ?.takeIf {
                         it is LoadState.Error && charactersAdapter.itemCount > 0
+                    } ?: loadState.prepend
+
+                footerAdapter.loadState = loadState.mediator
+                    ?.refresh
+                    .takeIf {
+                        (it is LoadState.NotLoading) && charactersAdapter.itemCount == 0
                     } ?: loadState.prepend
 
                 binding.flipperCharacters.displayedChild = when {
@@ -195,10 +206,10 @@ class CharactersFragment : Fragment(),
 
         if (viewModel.currentSearchQuery.isNotEmpty()){
             searchItem.expandActionView()
-            searchView.setQuery(viewModel.currentSearchQuery,false)
+            searchView?.setQuery(viewModel.currentSearchQuery,false)
         }
 
-        searchView.run {
+        searchView?.run {
             isSubmitButtonEnabled = true
             setOnQueryTextListener(this@CharactersFragment)
         }
@@ -236,13 +247,13 @@ class CharactersFragment : Fragment(),
 
     override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
         viewModel.closeSearch()
-        viewModel.searchCharacters()
+        viewModel.initialize()
         return true
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        searchView.setOnQueryTextListener(null)
+        searchView?.setOnQueryTextListener(null)
         _binding = null
     }
 

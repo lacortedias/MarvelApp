@@ -32,7 +32,7 @@ class CharactersViewModel @Inject constructor(
         .distinctUntilChanged()
         .switchMap {
             when (it) {
-                is Action.Search, Action.Sort -> {
+                is Action.Search, Action.Sort, Action.Initialize -> {
                     getCharactersUseCase.invoke(
                         GetCharactersUseCase.GetCharactersParams(currentSearchQuery, getPagingConfig())
                     ).cachedIn(viewModelScope).map { pagingData ->
@@ -60,6 +60,10 @@ class CharactersViewModel @Inject constructor(
         action.value = Action.Sort
     }
 
+    fun initialize(){
+        action.value = Action.Initialize
+    }
+
     fun closeSearch(){
         if (currentSearchQuery.isNotEmpty()){
             currentSearchQuery = ""
@@ -73,5 +77,6 @@ class CharactersViewModel @Inject constructor(
     sealed class Action {
         object Search : Action()
         object Sort : Action()
+        object Initialize : Action()
     }
 }

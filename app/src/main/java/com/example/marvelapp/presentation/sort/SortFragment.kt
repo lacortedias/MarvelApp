@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.forEach
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.core.domain.model.SortingType
@@ -21,8 +20,8 @@ class SortFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentSortBinding? = null
     private val binding: FragmentSortBinding get() = _binding!!
 
-    private var orderBy = SortingType.ORDER_BY_NAME.name
-    private var order = SortingType.ORDER_ASCENDING.name
+    private var orderBy = SortingType.ORDER_BY_NAME.value
+    private var order = SortingType.ORDER_ASCENDING.value
 
     private val viewModel: SortViewModel by viewModels()
 
@@ -46,13 +45,15 @@ class SortFragment : BottomSheetDialogFragment() {
     }
 
     private fun setChipGroupListeners(){
-        binding.chipGroupOrderBy.setOnCheckedChangeListener { group, checkedId ->
-            val chip = group.findViewById<Chip>(checkedId)
+        binding.chipGroupOrderBy.setOnCheckedStateChangeListener { group, checkedIds ->
+            val chipId = checkedIds.first()
+            val chip = group.findViewById<Chip>(chipId)
             orderBy = getOrderByValue(chip.id)
         }
 
-        binding.chipGroupOrder.setOnCheckedChangeListener { group, checkedId ->
-            val chip = group.findViewById<Chip>(checkedId)
+        binding.chipGroupOrder.setOnCheckedStateChangeListener { group, checkedIds ->
+            val chipId = checkedIds.first()
+            val chip = group.findViewById<Chip>(chipId)
             order = getOrderValue(chip.id)
         }
 
