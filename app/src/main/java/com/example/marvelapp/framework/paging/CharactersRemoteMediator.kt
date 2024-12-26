@@ -24,7 +24,7 @@ class CharactersRemoteMediator @Inject constructor(
     private val characterDao = database.characterDao()
     private val remoteKeyDao = database.remoteKeyDao()
 
-    @Suppress("ReturnCount")
+    @Suppress("ReturnCount", "TooGenericExceptionCaught")
     override suspend fun load(
         loadType: LoadType,
         state: PagingState<Int, CharacterEntity>
@@ -82,9 +82,11 @@ class CharactersRemoteMediator @Inject constructor(
 
             MediatorResult.Success(endOfPaginationReached = responseOffset >= totalCharacters)
 
+        } catch (e: HttpException) {
+            MediatorResult.Error(e)
         } catch (e: IOException) {
             MediatorResult.Error(e)
-        } catch (e: HttpException) {
+        } catch (e: Exception) {
             MediatorResult.Error(e)
         }
     }

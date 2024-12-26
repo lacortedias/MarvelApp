@@ -51,7 +51,6 @@ class FavoritesViewModel @Inject constructor(
         }
 
     val state: LiveData<UiState> = action
-        .distinctUntilChanged()
         .switchMap {
             liveData(coroutinesDispatchers.main()) {
                 when (it) {

@@ -31,7 +31,7 @@ class FavoritesFragment : Fragment(),
     private var _binding: FragmentFavoritesBinding? = null
     private val binding: FragmentFavoritesBinding get() = _binding!!
     private val viewModel: FavoritesViewModel by viewModels()
-    private lateinit var searchView: SearchView
+    private var searchView: SearchView? = null
 
     @Inject
     lateinit var imageLoader: ImageLoader
@@ -102,10 +102,10 @@ class FavoritesFragment : Fragment(),
 
         if (viewModel.currentSearchQuery.isNotEmpty()) {
             searchItem.expandActionView()
-            searchView.setQuery(viewModel.currentSearchQuery, false)
+            searchView?.setQuery(viewModel.currentSearchQuery, false)
         }
 
-        searchView.run {
+        searchView?.run {
             isSubmitButtonEnabled = true
             setOnQueryTextListener(this@FavoritesFragment)
         }
@@ -129,7 +129,6 @@ class FavoritesFragment : Fragment(),
             viewModel.searchCharacters()
             true
         } ?: false
-        //return true
     }
 
     override fun onMenuItemActionExpand(item: MenuItem): Boolean {
@@ -167,7 +166,7 @@ class FavoritesFragment : Fragment(),
 
     override fun onDestroy() {
         super.onDestroy()
-        searchView.setOnQueryTextListener(null)
+        searchView?.setOnQueryTextListener(null)
         _binding = null
     }
 

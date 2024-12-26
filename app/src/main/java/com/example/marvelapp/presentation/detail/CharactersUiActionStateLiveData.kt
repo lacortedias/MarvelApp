@@ -1,7 +1,9 @@
 package com.example.marvelapp.presentation.detail
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.LiveDataScope
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.distinctUntilChanged
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import com.example.core.usecase.GetCharacterCategoriesUseCase
@@ -15,56 +17,69 @@ class CharactersUiActionStateLiveData(
 ) {
 
     private val action = MutableLiveData<Action>()
-    val state: LiveData<UiState> = action.switchMap {
+    val state: LiveData<UiState> = action
+        .distinctUntilChanged()
+        .switchMap {
         liveData(coroutineContext) {
             when(it){
                 is Action.Load -> {
-                    getCharacterCategoriesUseCase.invoke(
-                        GetCharacterCategoriesUseCase.GetCategoriesParams(it.characterId)
-                    ).watchStatus(
-                        loading = {
-                            emit(UiState.Loading)
-                        },
-                        success = { data->
-                            val detailParentList = mutableListOf<DetailParentVE>()
-
-                            val comics = data.first
-                            if (comics.isNotEmpty()) {
-                                comics.map {
-                                    DetailChildVE(it.id, it.imageUrl)
-                                }.also {
-                                    detailParentList.add(
-                                        DetailParentVE(R.string.details_comics_category, it)
-                                    )
-                                }
-                            }
-
-                            val events = data.second
-                            if (events.isNotEmpty()) {
-                                events.map {
-                                    DetailChildVE(it.id, it.imageUrl)
-                                }.also {
-                                    detailParentList.add(
-                                        DetailParentVE(R.string.details_events_category, it)
-                                    )
-                                }
-                            }
-
-                            if (detailParentList.isNotEmpty()) {
-                                emit(UiState.Success(detailParentList))
-                            } else emit(UiState.Empty)
-                        },
-                        error = {
-                            emit(UiState.Error)
-                        }
-                    )
+                    actionLoadAndRetry(it.characterId)
+                }
+                is Action.Retry -> {
+                    actionLoadAndRetry(it.characterId)
                 }
             }
         }
     }
 
+    private suspend fun LiveDataScope<UiState>.actionLoadAndRetry(characterId: Int) {
+        getCharacterCategoriesUseCase.invoke(
+            GetCharacterCategoriesUseCase.GetCategoriesParams(characterId)
+        ).watchStatus(
+            loading = {
+                emit(UiState.Loading)
+            },
+            success = { data ->
+                val detailParentList = mutableListOf<DetailParentVE>()
+
+                val comics = data.first
+                if (comics.isNotEmpty()) {
+                    comics.map {
+                        DetailChildVE(it.id, it.titleCategory, it.imageUrl)
+                    }.also {
+                        detailParentList.add(
+                            DetailParentVE(R.string.details_comics_category, it)
+                        )
+                    }
+                }
+
+                val events = data.second
+                if (events.isNotEmpty()) {
+                    events.map {
+                        DetailChildVE(it.id, it.titleCategory, it.imageUrl)
+                    }.also {
+                        detailParentList.add(
+                            DetailParentVE(R.string.details_events_category, it)
+                        )
+                    }
+                }
+
+                if (detailParentList.isNotEmpty()) {
+                    emit(UiState.Success(detailParentList))
+                } else emit(UiState.Empty)
+            },
+            error = {
+                emit(UiState.Error)
+            }
+        )
+    }
+
     fun load (characterId: Int){
         action.value = Action.Load(characterId)
+    }
+
+    fun retry (characterId: Int){
+        action.value = Action.Retry(characterId)
     }
 
     sealed class UiState {
@@ -76,5 +91,6 @@ class CharactersUiActionStateLiveData(
 
     sealed class Action {
         data class Load(val characterId: Int): Action()
+        data class Retry(val characterId: Int): Action()
     }
 }

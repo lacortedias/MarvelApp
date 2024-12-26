@@ -7,6 +7,7 @@ class EventFactoryTest {
     fun create(event: FakeEvent) = when (event) {
         FakeEvent.FakeEvent1 -> Event(
             1,
+            "Title",
             "http://fakeurl.jpg"
         )
     }

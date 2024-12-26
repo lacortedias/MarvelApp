@@ -17,6 +17,9 @@ interface CharacterDao {
     @Query("SELECT * FROM ${DbConstants.CHARACTERS_TABLE_NAME}")
     fun pagingSource(): PagingSource<Int, CharacterEntity>
 
+    @Query("SELECT * FROM ${DbConstants.CHARACTERS_TABLE_NAME}")
+    fun getAll(): List<CharacterEntity>
+
     @Query("DELETE FROM ${DbConstants.CHARACTERS_TABLE_NAME}")
     suspend fun clearAll()
 }
