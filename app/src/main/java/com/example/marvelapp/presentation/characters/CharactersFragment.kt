@@ -101,6 +101,7 @@ class CharactersFragment : Fragment(),
                 is CharactersViewModel.UiState.SearchResult -> {
                     charactersAdapter.submitData(viewLifecycleOwner.lifecycle, uiState.data)
                 }
+                is CharactersViewModel.UiState.Cleaned -> {}
             }
         }
 
