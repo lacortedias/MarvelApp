@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.distinctUntilChanged
+import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingConfig
@@ -39,6 +40,12 @@ class CharactersViewModel @Inject constructor(
                         UiState.SearchResult(pagingData)
                     }.asLiveData(coroutinesDispatchers.main())
                 }
+
+                is Action.CleanAction -> {
+                    liveData(coroutinesDispatchers.main()) {
+                        emit(UiState.Cleaned)
+                    }
+                }
             }
         }
 
@@ -53,30 +60,41 @@ class CharactersViewModel @Inject constructor(
     )
 
     fun searchCharacters() {
+        if (action.value == Action.Search) {
+            action.value = Action.CleanAction
+        }
         action.value = Action.Search
     }
 
-    fun applySort(){
+    fun applySort() {
+        if (action.value == Action.Sort) {
+            action.value = Action.CleanAction
+        }
         action.value = Action.Sort
     }
 
-    fun initialize(){
+    fun initialize() {
+        if (action.value == Action.Initialize) {
+            action.value = Action.CleanAction
+        }
         action.value = Action.Initialize
     }
 
-    fun closeSearch(){
-        if (currentSearchQuery.isNotEmpty()){
+    fun closeSearch() {
+        if (currentSearchQuery.isNotEmpty()) {
             currentSearchQuery = ""
         }
     }
 
     sealed class UiState {
         data class SearchResult(val data: PagingData<Character>) : UiState()
+        object Cleaned : UiState()
     }
 
     sealed class Action {
         object Search : Action()
         object Sort : Action()
         object Initialize : Action()
+        object CleanAction : Action()
     }
 }
