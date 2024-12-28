@@ -22,7 +22,6 @@ import android.os.Bundle
 import androidx.annotation.StyleRes
 import androidx.core.util.Preconditions
 import androidx.fragment.app.Fragment
-import androidx.fragment.testing.R.style.FragmentScenarioEmptyFragmentActivityTheme
 import androidx.lifecycle.ViewModelStore
 import androidx.navigation.NavHostController
 import androidx.navigation.Navigation
@@ -40,7 +39,7 @@ import androidx.test.core.app.ApplicationProvider
  */
 inline fun <reified T : Fragment> launchFragmentInHiltContainer(
     fragmentArgs: Bundle? = null,
-    @StyleRes themeResId: Int = FragmentScenarioEmptyFragmentActivityTheme,
+    @StyleRes themeResId: Int = R.style.Theme_Marvelapp,
     navHostController: NavHostController? = null,
     crossinline action: Fragment.() -> Unit = {}
 ) {

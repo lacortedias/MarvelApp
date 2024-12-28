@@ -44,6 +44,12 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener{ _, destination, _ ->
             val isTopLevelDestination = appBarConfiguration.topLevelDestinations.contains(destination.id)
+
+//            binding.toolbarApp.visibility = View.VISIBLE
+//            if (R.id.aboutFragment == destination.id){
+//                binding.toolbarApp.visibility = View.GONE
+//            }
+
             if (!isTopLevelDestination) {
                 binding.toolbarApp.setNavigationIcon(R.drawable.ic_back)
             }
