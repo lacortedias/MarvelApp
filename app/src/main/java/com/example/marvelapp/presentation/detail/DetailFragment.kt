@@ -5,12 +5,14 @@ import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.marvelapp.databinding.FragmentDetailBinding
 import com.example.marvelapp.framework.imageloader.ImageLoader
-import com.example.marvelapp.presentation.extensions.showShortToast
+import com.example.marvelapp.presentation.ui.FavoriteButton
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -66,12 +68,14 @@ class DetailFragment : Fragment() {
                     }
                     FLIPPER_CHILD_POSITION_DETAIL
                 }
+
                 CharactersUiActionStateLiveData.UiState.Error -> {
                     binding.includeErrorView.buttonRetry.setOnClickListener {
                         viewModel.charactersCategories.retry(args.detailViewArg.characterId)
                     }
                     FLIPPER_CHILD_POSITION_ERROR
                 }
+
                 CharactersUiActionStateLiveData.UiState.Empty -> FLIPPER_CHILD_POSITION_EMPTY
             }
         }
@@ -81,22 +85,12 @@ class DetailFragment : Fragment() {
         viewModel.favoritesCategories.run {
             checkFavorite(detailViewArg.characterId)
 
-            binding.imageFavoriteIcon.setOnClickListener {
-                update(detailViewArg)
-            }
-
-            state.observe(viewLifecycleOwner) { uiState ->
-                binding.flipperFavorite.displayedChild = when (uiState) {
-                    FavoritesUiActionStateLiveData.UiState.Loading -> FLIPPER_FAVORITE_CHILD_POSITION_LOADING
-                    is FavoritesUiActionStateLiveData.UiState.Icon -> {
-                        binding.imageFavoriteIcon.setImageResource(uiState.icon)
-                        FLIPPER_FAVORITE_CHILD_POSITION_SUCCESS_OR_ERROR_IMAGE
-                    }
-                    is FavoritesUiActionStateLiveData.UiState.Error -> {
-                        showShortToast(uiState.messageResId)
-                        FLIPPER_FAVORITE_CHILD_POSITION_SUCCESS_OR_ERROR_IMAGE
-                    }
-                }
+            binding.buttonFavorite.setContent {
+                val uiState by state.observeAsState(FavoritesUiActionStateLiveData.UiState.Icon(favoriteCharacter))
+                FavoriteButton(
+                    uiState = uiState,
+                    onClick = { update(detailViewArg) },
+                )
             }
         }
     }
@@ -119,8 +113,6 @@ class DetailFragment : Fragment() {
         private const val FLIPPER_CHILD_POSITION_DETAIL = 1
         private const val FLIPPER_CHILD_POSITION_ERROR = 2
         private const val FLIPPER_CHILD_POSITION_EMPTY = 3
-        private const val FLIPPER_FAVORITE_CHILD_POSITION_SUCCESS_OR_ERROR_IMAGE = 0
-        private const val FLIPPER_FAVORITE_CHILD_POSITION_LOADING = 1
     }
 
 }
