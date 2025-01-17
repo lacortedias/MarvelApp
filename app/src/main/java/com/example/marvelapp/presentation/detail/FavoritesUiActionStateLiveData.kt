@@ -36,6 +36,7 @@ class FavoritesUiActionStateLiveData(
                             favoriteCharacter = isFavorite
                             emitFavoriteIcon()
                         },
+                        successUpdateChildList = {},
                         error = {}
                     )
 
@@ -52,6 +53,7 @@ class FavoritesUiActionStateLiveData(
                                 favoriteCharacter = true
                                 emitFavoriteIcon()
                             },
+                            successUpdateChildList = {},
                             error = {
                                 emit(UiState.Error(R.string.error_add_favorite))
                             }
@@ -70,6 +72,7 @@ class FavoritesUiActionStateLiveData(
                                 favoriteCharacter = false
                                 emitFavoriteIcon()
                             },
+                            successUpdateChildList = {},
                             error = {
                                 emit(UiState.Error(R.string.error_delete_favorite))
                             }

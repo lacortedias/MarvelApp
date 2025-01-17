@@ -1,8 +1,7 @@
 package com.example.core.usecase
 
 import com.example.core.data.repository.CharactersRepository
-import com.example.core.domain.model.Comic
-import com.example.core.domain.model.Event
+import com.example.core.domain.model.Categories
 import com.example.core.usecase.base.CoroutinesDispatchers
 import com.example.core.usecase.base.ResultStatus
 import com.example.core.usecase.base.UseCase
@@ -15,9 +14,9 @@ interface GetCharacterCategoriesUseCase {
 
     operator fun invoke(
         params: GetCategoriesParams
-    ): Flow<ResultStatus<Pair<List<Comic>, List<Event>>>>
+    ): Flow<ResultStatus<Categories>>
 
-    data class GetCategoriesParams(val characterId: Int)
+    data class GetCategoriesParams(val characterId: Int, val offset: Int)
 
 }
 
@@ -26,19 +25,35 @@ class GetCharacterCategoriesUseCaseImpl @Inject constructor(
     private val dispatchers: CoroutinesDispatchers
 ): GetCharacterCategoriesUseCase,
     UseCase<GetCharacterCategoriesUseCase.GetCategoriesParams,
-            Pair<List<Comic>, List<Event>>>(){
+            Categories>(){
     override suspend fun doWork(
         params: GetCharacterCategoriesUseCase.GetCategoriesParams
-    ): ResultStatus<Pair<List<Comic>, List<Event>>> {
+    ): ResultStatus<Categories> {
         return withContext(dispatchers.io()){
-            val comicsDeferred = async { repository.getComics(params.characterId) }
-            val eventsDeferred = async { repository.getEvents(params.characterId) }
+            val offset = params.offset
+            val characterId = params.characterId
+
+            val comicsDeferred = async { repository.getComics(characterId, offset) }
+            val eventsDeferred = async { repository.getEvents(characterId, offset) }
+            val seriesDeferred = async { repository.getSeries(characterId, offset) }
             val comics = comicsDeferred.await()
             val events = eventsDeferred.await()
+            val series = seriesDeferred.await()
 
-            ResultStatus.Success(comics to events)
+            val categories = Categories(
+                comics = comics,
+                events = events,
+                series = series
+            )
+            if (offset == DEFAULT_OFFSET) {
+                ResultStatus.Success(categories)
+            } else {
+                ResultStatus.SuccessUpdateChildList(categories)
+            }
         }
-
     }
 
+    companion object {
+        const val DEFAULT_OFFSET = 0
+    }
 }

@@ -1,0 +1,5 @@
+<resources>
+    <string name="details_comics_category">Comics</string>
+    <string name="details_events_category">Events</string>
+    <string name="details_series_category">Series</string>
+</resources>

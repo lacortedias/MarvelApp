@@ -1,9 +1,7 @@
 package com.example.core.usecase
 
 import com.example.core.data.mapper.SortingMapper
-import com.example.core.data.repository.FavoritesRepository
 import com.example.core.data.repository.StorageRepository
-import com.example.core.domain.model.Character
 import com.example.core.usecase.base.CoroutinesDispatchers
 import com.example.core.usecase.base.ResultStatus
 import com.example.core.usecase.base.UseCase

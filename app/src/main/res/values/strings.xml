@@ -3,6 +3,7 @@
     <string name="common_no_internet_connection">No internet connection</string>
     <string name="common_no_results_found">No results found</string>
     <string name="common_try_again">Try again</string>
+    <string name="common_no_more_results_found">No more results found</string>
 
     <string name="error_loading_data">Error when trying to load data</string>
     <string name="error_loading_more_try_again">Error when trying to load the next page. Try again</string>
@@ -22,6 +23,7 @@
 
     <string name="details_comics_category">Comics</string>
     <string name="details_events_category">Events</string>
+    <string name="details_series_category">Series</string>
 
     <string name="favorites_screen_title">Favorites</string>
     <string name="favorites_no_favorites_in_the_list">No heroes in the favorite list</string>

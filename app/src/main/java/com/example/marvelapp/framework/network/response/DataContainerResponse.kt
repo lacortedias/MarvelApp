@@ -5,10 +5,10 @@ import com.google.gson.annotations.SerializedName
 data class DataContainerResponse<T>(
 
     @SerializedName("total")
-    val total: Int,
+    var total: Int,
     @SerializedName("offset")
-    val offset: Int,
+    var offset: Int,
     @SerializedName("results")
-    val results: List<T>
+    var results: List<T>
 
 )
