@@ -10,6 +10,7 @@ import com.example.core.data.repository.CharactersRepository
 import com.example.core.domain.model.Character
 import com.example.core.domain.model.Comic
 import com.example.core.domain.model.Event
+import com.example.core.domain.model.Serie
 import com.example.marvelapp.framework.db.AppDatabase
 import com.example.marvelapp.framework.paging.CharactersRemoteMediator
 import kotlinx.coroutines.flow.Flow
@@ -43,11 +44,15 @@ class CharactersRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getComics(characterId: Int): List<Comic> {
-        return remoteDataSource.fetchComics(characterId)
+    override suspend fun getComics(characterId: Int, offset: Int): List<Comic> {
+        return remoteDataSource.fetchComics(characterId, offset)
     }
 
-    override suspend fun getEvents(characterId: Int): List<Event> {
-        return remoteDataSource.fetchEvents(characterId)
+    override suspend fun getEvents(characterId: Int, offset: Int): List<Event> {
+        return remoteDataSource.fetchEvents(characterId, offset)
+    }
+
+    override suspend fun getSeries(characterId: Int, offset: Int): List<Serie> {
+        return remoteDataSource.fetchSeries(characterId, offset)
     }
 }

@@ -1,9 +1,7 @@
 package com.example.marvelapp.presentation.detail
 
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataScope
 import androidx.lifecycle.MutableLiveData
@@ -24,7 +22,7 @@ class FavoritesUiActionStateLiveData(
 ) {
 
     @set:VisibleForTesting
-    var currentFavoriteIcon = R.drawable.ic_favorite_unchecked
+    var favoriteCharacter = false
 
     private val action = MutableLiveData<Action>()
     val state: LiveData<UiState> = action.switchMap {
@@ -35,13 +33,11 @@ class FavoritesUiActionStateLiveData(
                         CheckFavoriteUseCase.Params(it.characterId)
                     ).watchStatus(
                         success = { isFavorite ->
-                            if (isFavorite) {
-                                currentFavoriteIcon = R.drawable.ic_favorite_checked
-                            }
+                            favoriteCharacter = isFavorite
                             emitFavoriteIcon()
                         },
+                        successUpdateChildList = {},
                         error = {}
-
                     )
 
                 }
@@ -54,9 +50,10 @@ class FavoritesUiActionStateLiveData(
                                 emit(UiState.Loading)
                             },
                             success = {
-                                currentFavoriteIcon = R.drawable.ic_favorite_checked
+                                favoriteCharacter = true
                                 emitFavoriteIcon()
                             },
+                            successUpdateChildList = {},
                             error = {
                                 emit(UiState.Error(R.string.error_add_favorite))
                             }
@@ -72,9 +69,10 @@ class FavoritesUiActionStateLiveData(
                                 emit(UiState.Loading)
                             },
                             success = {
-                                currentFavoriteIcon = R.drawable.ic_favorite_unchecked
+                                favoriteCharacter = false
                                 emitFavoriteIcon()
                             },
+                            successUpdateChildList = {},
                             error = {
                                 emit(UiState.Error(R.string.error_delete_favorite))
                             }
@@ -85,9 +83,8 @@ class FavoritesUiActionStateLiveData(
         }
     }
 
-
     private suspend fun LiveDataScope<UiState>.emitFavoriteIcon() {
-        emit(UiState.Icon(currentFavoriteIcon))
+        emit(UiState.Icon(favoriteCharacter))
     }
 
     fun checkFavorite(characterId: Int) {
@@ -95,15 +92,15 @@ class FavoritesUiActionStateLiveData(
     }
 
     fun update(detailViewArg: DetailViewArg) {
-        action.value = if (currentFavoriteIcon == R.drawable.ic_favorite_unchecked){
+        action.value = if (!favoriteCharacter){
             Action.AddFavorite(detailViewArg)
         } else Action.DeleteFavorite(detailViewArg)
     }
 
 
     sealed class UiState {
-        object Loading : UiState()
-        data class Icon(@DrawableRes val icon: Int) : UiState()
+        data object Loading : UiState()
+        data class Icon(val isFavorite: Boolean) : UiState()
         data class Error(@StringRes val messageResId: Int) : UiState()
     }
 

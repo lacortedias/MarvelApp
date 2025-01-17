@@ -38,6 +38,7 @@ class SortViewModel @Inject constructor(
                     ).watchStatus(
                         loading = {emit(UiState.ApplyState.Loading)},
                         success = {emit(UiState.ApplyState.Success)},
+                        successUpdateChildList = {},
                         error = {emit(UiState.ApplyState.Error)}
                     )
                 }

@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    private const val TIMEOUT_SECUNDS = 15L
+    private const val TIMEOUT_SECUNDS = 25L
 
     @Provides
     fun provideLoggingInterceptor(): HttpLoggingInterceptor{

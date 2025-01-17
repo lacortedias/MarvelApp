@@ -6,7 +6,7 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.runner.AndroidJUnit4
 import com.example.marvelapp.R
 import com.example.marvelapp.extension.asJsonString
 import com.example.marvelapp.framework.di.BaseUrlModule
@@ -21,7 +21,6 @@ import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

@@ -1,6 +1,7 @@
 package com.example.testing.model
 
 import com.example.core.domain.model.Comic
+import com.example.testing.R
 
 class ComicFactoryTest {
 
@@ -8,7 +9,8 @@ class ComicFactoryTest {
         FakeComic.FakeComic1 -> Comic(
             2211506,
             "Title",
-            "http://fakecomigurl.jpg"
+            "http://fakecomigurl.jpg",
+            R.string.details_events_category
         )
     }
 

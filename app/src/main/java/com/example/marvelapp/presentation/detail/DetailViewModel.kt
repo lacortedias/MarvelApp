@@ -18,6 +18,8 @@ class DetailViewModel @Inject constructor(
     coroutinesDispatchers: CoroutinesDispatchers
 ) : ViewModel() {
 
+    var offset = 0
+
     val charactersCategories = CharactersUiActionStateLiveData(
         coroutinesDispatchers.main(),
         getCharacterCategoriesUseCase
@@ -29,5 +31,4 @@ class DetailViewModel @Inject constructor(
         addFavoriteUseCase,
         deleteFavoriteUseCase
     )
-
 }
